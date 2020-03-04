@@ -10,9 +10,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(bodyParser.json());
 
-app.use('/api/v1/companies');
-app.use('/api/v1/trucks');
-app.use('/api/v1/gifs');
-app.use('/api/v1/feed');
+app.use('/api/v1/companies', companyRoutes);
+app.use('/api/v1/logs', logRoutes);
 
 module.exports = app;
