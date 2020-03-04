@@ -1,0 +1,42 @@
+CREATE TABLE IF NOT EXISTS companies (
+    id VARCHAR PRIMARY KEY,
+    company_name VARCHAR(255) NOT NULL,
+    lastName VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL UNIQUE
+);
+
+CREATE TABLE IF NOT EXISTS trucks (
+    id VARCHAR PRIMARY KEY,
+    model VARCHAR(255) NOT NULL,
+    registration VARCHAR(255) NOT NULL,
+    chassis_no VARCHAR(255) NOT NULL UNIQUE,
+    engine_no VARCHAR(255) NOT NULL,
+    mileage VARCHAR(255) NOT NULL,
+    company_id VARCHAR REFERENCES companies(id) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS logs (
+    id VARCHAR PRIMARY KEY,
+    driver_name VARCHAR(255) NOT NULL,
+    driver_number VARCHAR(255) NOT NULL,
+    truck_id VARCHAR REFERENCES trucks(id) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS parts (
+  id VARCHAR PRIMARY KEY,
+  part_number VARCHAR(255) NOT NULL UNIQUE,
+  description VARCHAR(255) NOT NULL,
+  price VARCHAR(255) NOT NULL,
+  truck_id VARCHAR REFERENCES trucks(id) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS services (
+  id VARCHAR PRIMARY KEY,
+  status VARCHAR(10) NOT NULL,
+  quantity VARCHAR(10) NOT NULL,
+  total VARCHAR(20) NOT NULL,
+  part_id VARCHAR REFERENCES parts(id) ON DELETE CASCADE,
+  log_id VARCHAR REFERENCES logs(id) ON DELETE CASCADE
+);
+
+select * from services
