@@ -13,6 +13,16 @@ const Truck = {
     return row;
   },
 
+  getAllParts(values) {
+    const queryText = 'SELECT * FROM parts WHERE truck_id=$1';
+    const rows = query(queryText, values)
+      .then((res) => res.rows)
+      .catch((err) => {
+        throw err;
+      });
+    return rows;
+  },
+
   savePart(values) {
     const queryText = `INSERT INTO
     parts (id, part_number, description, price, truck_id)

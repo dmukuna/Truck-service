@@ -2,6 +2,9 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 
+import companyRoutes from './routes/company';
+import logRoutes from './routes/log';
+
 const app = express();
 
 app.use(cors());

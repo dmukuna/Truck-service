@@ -13,6 +13,16 @@ const Company = {
     return row;
   },
 
+  getAllCompanies() {
+    const queryText = 'SELECT * FROM companies';
+    const rows = query(queryText)
+      .then((res) => res.rows)
+      .catch((err) => {
+        throw err;
+      });
+    return rows;
+  },
+
   saveCompany(values) {
     const queryText = `INSERT INTO
       companies (id, company_name, email)

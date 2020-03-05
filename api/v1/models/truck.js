@@ -13,6 +13,16 @@ const Truck = {
     return row;
   },
 
+  getAllTrucks(values) {
+    const queryText = 'SELECT * FROM trucks WHERE company_id=$1';
+    const rows = query(queryText, values)
+      .then((res) => res.rows)
+      .catch((err) => {
+        throw err;
+      });
+    return rows;
+  },
+
   saveTruck(values) {
     const queryText = `INSERT INTO
     trucks (id, model, registration, chassis_no, engine_no, mileage, company_id)

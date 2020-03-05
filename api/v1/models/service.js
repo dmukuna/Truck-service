@@ -13,10 +13,18 @@ const Service = {
     return row;
   },
 
-  saveService(values) {
-    const queryText = `INSERT INTO
-    services (id, status, quantity, part_id, log_id)
-    VALUES ($1, $2, $3, $4, $5) RETURNING *`;
+  getAllServices(values) {
+    const queryText = 'SELECT * FROM services WHERE part_id=$1 AND log_id=$2';
+    const rows = query(queryText, values)
+      .then((res) => res.rows)
+      .catch((err) => {
+        throw err;
+      });
+    return rows;
+  },
+
+  updateService(values) {
+    const queryText = 'UPDATE services SET status=$1 WHERE part_id=$2 AND log_id=$3 RETURNING *';
     const row = query(queryText, values)
       .then((res) => res.rows[0])
       .catch((err) => {
@@ -25,8 +33,10 @@ const Service = {
     return row;
   },
 
-  updateService(values) {
-    const queryText = 'UPDATE services SET status=$1 WHERE ID=$2 RETURNING *';
+  saveService(values) {
+    const queryText = `INSERT INTO
+    services (id, status, quantity, total, part_id, log_id)
+    VALUES ($1, $2, $3, $4, $5, $6) RETURNING *`;
     const row = query(queryText, values)
       .then((res) => res.rows[0])
       .catch((err) => {
