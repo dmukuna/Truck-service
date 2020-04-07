@@ -1,9 +1,13 @@
 import uuidv1 from 'uuid/v1';
 import srvc from '../models/service';
 import prt from '../models/part';
+import lg from '../models/log';
+import cmp from '../models/company';
 
 const { saveService, updateService, getAllServices } = srvc;
 const { findOnePart } = prt;
+const { findOneLog } = lg;
+const { findOneCompany } = cmp;
 
 const addServiceController = async (req, res, next) => {
   const { quantity } = req.body;
@@ -45,7 +49,13 @@ const updateServiceController = async (req, res, next) => {
     const status = true;
     const values = [status, partId, logId];
 
-    await updateService(values);
+    const srvcRow = await updateService(values);
+    const lgRow = await findOneLog([logId]);
+    const { company_id } = lgRow;
+    const cmpRow = await findOneCompany([company_id]);
+    const { email } = cmpRow;
+    const { total } = srvcRow;
+
 
     res.status(201).json({
       status: 'success',

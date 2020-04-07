@@ -1,9 +1,8 @@
 import pool from '../config/dbConfig';
 
-pool.connect();
-
 export default {
-  query(text, params) {
+  async query(text, params) {
+    await pool.connect();
     return new Promise((resolve, reject) => {
       pool.query(text, params)
         .then((res) => {
